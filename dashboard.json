@@ -2365,7 +2365,7 @@
       "pluginVersion": "7.3.3",
       "targets": [
         {
-          "expr": "(sum(validator_balance) - sum(validator_balance offset 1d) - count(validator_balance > 16)*32 + count(validator_balance offset 1d > 0)*32)*absent(crypto_currency{pair=~\"eth$fiat\"})",
+          "expr": "(scalar(validator_balance) - scalar(validator_balance offset 1d)) / scalar(validator_balance)*absent(crypto_currency{pair=~"eth$fiat"})",
           "hide": false,
           "instant": true,
           "interval": "",
@@ -2373,14 +2373,14 @@
           "refId": "A"
         },
         {
-          "expr": "(sum(validator_balance) - sum(validator_balance offset 1d) - count(validator_balance > 16)*32 + count(validator_balance offset 1d > 0)*32)*sum(crypto_currency{pair=\"eth$fiat\"})",
+          "expr": "(scalar(validator_balance) - scalar(validator_balance offset 1d)) / scalar(validator_balance)*32*sum(crypto_currency{pair="eth$fiat"})",
           "instant": false,
           "interval": "",
           "legendFormat": "$fiat",
           "refId": "C"
         },
         {
-          "expr": "(sum(validator_balance) - sum(validator_balance offset 1d) - count(validator_balance > 16)*32 + count(validator_balance offset 1d > 0)*32)/(avg_over_time(count(validator_balance > 16)[1d:12m])*32/365)*100",
+          "expr": "(scalar(validator_balance) - scalar(validator_balance offset 1d)) * 365 * 100 / scalar(validator_balance)",
           "instant": true,
           "interval": "",
           "legendFormat": "Annualized",
@@ -3147,7 +3147,7 @@
       "steppedLine": true,
       "targets": [
         {
-          "expr": "(sum(validator_balance) - sum(validator_balance offset 1d) - count(validator_balance > 16) + count(validator_balance offset 1d > 0))/(avg_over_time(count(validator_balance > 16)[1d:1m])*32/365)*100",
+          "expr": "(scalar(validator_balance) - scalar(validator_balance offset 1d)) * 365 * 100 / scalar(validator_balance)",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
