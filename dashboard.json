@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 5,
-  "iteration": 1607089055283,
+  "iteration": 1607162891089,
   "links": [],
   "panels": [
     {
@@ -140,7 +140,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
@@ -150,29 +150,11 @@
       "pluginVersion": "7.3.3",
       "targets": [
         {
-          "expr": "100 - (avg by (instance) (irate(node_cpu_seconds_total{cpu=\"0\",mode=\"idle\"}[20s])) * 100)",
+          "expr": "100 - ((irate(node_cpu_seconds_total{mode=\"idle\"}[20s])) * 100)",
           "instant": false,
           "interval": "",
-          "legendFormat": "CPU 0",
+          "legendFormat": "CPU {{cpu}}",
           "refId": "A"
-        },
-        {
-          "expr": "100 - (avg by (instance) (irate(node_cpu_seconds_total{cpu=\"1\",mode=\"idle\"}[20s])) * 100)",
-          "interval": "",
-          "legendFormat": "CPU 1",
-          "refId": "B"
-        },
-        {
-          "expr": "100 - (avg by (instance) (irate(node_cpu_seconds_total{cpu=\"2\",mode=\"idle\"}[20s])) * 100)",
-          "interval": "",
-          "legendFormat": "CPU 2",
-          "refId": "C"
-        },
-        {
-          "expr": "100 - (avg by (instance) (irate(node_cpu_seconds_total{cpu=\"3\",mode=\"idle\"}[20s])) * 100)",
-          "interval": "",
-          "legendFormat": "CPU 3",
-          "refId": "D"
         }
       ],
       "timeFrom": null,
@@ -312,6 +294,103 @@
       "type": "gauge"
     },
     {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 15,
+        "y": 1
+      },
+      "hiddenSeries": false,
+      "id": 166,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "ping_rtt_mean_ms",
+          "interval": "",
+          "legendFormat": "{{target}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Ping",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "none",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "datasource": null,
       "description": "",
       "fieldConfig": {
@@ -344,7 +423,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 15,
+        "x": 18,
         "y": 1
       },
       "id": 92,
@@ -429,7 +508,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 18,
+        "x": 21,
         "y": 1
       },
       "id": 104,
@@ -468,77 +547,6 @@
       "timeShift": null,
       "title": "I/0",
       "type": "stat"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 21,
-        "y": 1
-      },
-      "id": 94,
-      "options": {
-        "displayMode": "gradient",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true
-      },
-      "pluginVersion": "7.3.3",
-      "targets": [
-        {
-          "expr": "sum(node_filesystem_device_error{mountpoint=\"/mnt/data\"})",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "SSD",
-          "refId": "B"
-        },
-        {
-          "expr": "sum(node_filesystem_device_error{mountpoint=\"/\"})",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "SD",
-          "refId": "A"
-        },
-        {
-          "expr": "sum(node_filesystem_device_error{mountpoint=\"/boot/firmware\"})",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "BOOT",
-          "refId": "C"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "I/O Errors",
-      "type": "bargauge"
     },
     {
       "collapsed": false,
@@ -1249,6 +1257,12 @@
           "interval": "",
           "legendFormat": "ROI",
           "refId": "B"
+        },
+        {
+          "expr": "",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "D"
         }
       ],
       "timeFrom": null,
@@ -1590,11 +1604,12 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "semi-dark-blue",
-            "mode": "fixed"
+            "mode": "continuous-GrYlRd"
           },
           "custom": {},
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1603,9 +1618,18 @@
                 "value": null
               }
             ]
-          }
+          },
+          "unit": "Slots"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": []
+          }
+        ]
       },
       "gridPos": {
         "h": 2,
@@ -1631,8 +1655,8 @@
       "pluginVersion": "7.3.3",
       "targets": [
         {
-          "expr": "validator_last_attested_slot",
-          "instant": true,
+          "expr": "scalar(beacon_slot) - scalar(validator_last_attested_slot)",
+          "instant": false,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -2365,15 +2389,15 @@
       "pluginVersion": "7.3.3",
       "targets": [
         {
-          "expr": "(scalar(validator_balance) - scalar(validator_balance offset 1d)) / scalar(validator_balance)*absent(crypto_currency{pair=~"eth$fiat"})",
+          "expr": "(scalar(validator_balance) - scalar(validator_balance offset 1d)) / scalar(validator_balance)*absent(crypto_currency{pair=~\"eth$fiat\"})",
           "hide": false,
-          "instant": true,
+          "instant": false,
           "interval": "",
           "legendFormat": "ETH",
           "refId": "A"
         },
         {
-          "expr": "(scalar(validator_balance) - scalar(validator_balance offset 1d)) / scalar(validator_balance)*32*sum(crypto_currency{pair="eth$fiat"})",
+          "expr": "(scalar(validator_balance) - scalar(validator_balance offset 1d)) / scalar(validator_balance)*32*sum(crypto_currency{pair=\"eth$fiat\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "$fiat",
@@ -2381,7 +2405,7 @@
         },
         {
           "expr": "(scalar(validator_balance) - scalar(validator_balance offset 1d)) * 365 * 100 / scalar(validator_balance)",
-          "instant": true,
+          "instant": false,
           "interval": "",
           "legendFormat": "Annualized",
           "refId": "B"
@@ -3459,6 +3483,283 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 0,
+        "y": 23
+      },
+      "hiddenSeries": false,
+      "id": 165,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "ping_rtt_mean_ms",
+          "interval": "",
+          "legendFormat": "{{target}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Ping RT",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 30
+      },
+      "id": 161,
+      "panels": [],
+      "title": "Extra",
+      "type": "row"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 0,
+        "y": 31
+      },
+      "id": 94,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.3",
+      "targets": [
+        {
+          "expr": "sum(node_filesystem_device_error{mountpoint=\"/mnt/data\"})",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "SSD",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(node_filesystem_device_error{mountpoint=\"/\"})",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "SD",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(node_filesystem_device_error{mountpoint=\"/boot/firmware\"})",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "BOOT",
+          "refId": "C"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "I/O Errors",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "max": 10,
+          "min": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "max loss"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percentunit"
+              },
+              {
+                "id": "min",
+                "value": 0
+              },
+              {
+                "id": "max",
+                "value": 0.05
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 3,
+        "y": 31
+      },
+      "id": 163,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.3",
+      "targets": [
+        {
+          "expr": "avg(ping_rtt_mean_ms)",
+          "interval": "",
+          "legendFormat": "avg rt",
+          "refId": "A"
+        },
+        {
+          "expr": "max(ping_loss_percent)",
+          "interval": "",
+          "legendFormat": "max loss",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Ping",
+      "transformations": [],
+      "type": "stat"
     }
   ],
   "refresh": "30s",
@@ -3497,7 +3798,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-12h",
     "to": "now"
   },
   "timepicker": {
@@ -3527,5 +3828,5 @@
   "timezone": "",
   "title": "Staking Dashboard",
   "uid": "nQaRO6Yiz",
-  "version": 117
+  "version": 131
 }
